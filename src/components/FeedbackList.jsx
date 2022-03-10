@@ -1,12 +1,13 @@
 import FeedbackItem from './FeedbackItem';
 
 function FeedbackList({ feedback }) {
-  // conditional set in case there is no feedback item
+  // conditional set in case there is no feedback item, else return the list
   if (!feedback || feedback.length === 0) {
     return <p>There is no feedback yet.</p>;
   }
   return (
     <div className="feedback-list">
+      {/* iterating through the feedback list */}
       {feedback.map((item) => (
         <FeedbackItem key={item.id} item={item} />
       ))}
