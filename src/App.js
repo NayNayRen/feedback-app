@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Header from './components/Header';
 import FeedbackList from './components/FeedbackList';
 import FeedbackData from './data/FeedbackData';
+import FeedbackStats from './components/FeedbackStats';
 
 function App() {
   // feedback list as global/app level state, passed as a prop to FeedbackList
@@ -18,6 +19,7 @@ function App() {
     <>
       <Header />
       <div className="container">
+        <FeedbackStats feedback={feedback} />
         {/* props are passed from FeedbackList component */}
         <FeedbackList feedback={feedback} handleDelete={deleteFeedback} />
       </div>
@@ -32,6 +34,7 @@ export default App;
 // stored data in data folder as FeedbackData.js, exported from the file, imported here, and passed through the useState function
 
 // state is basically data, 2 types, component level and global/app level
+// state is a single source of truth, anything connected to it auto updates
 // component level is specific to only that component, i.e. a nav container that's only opened or closed
 // global/app level is specific to everything, an rray of data needed at multiple locations
 // import with { useState } call it as a function in a destructured array variable
