@@ -8,13 +8,17 @@ function App() {
   const [feedback, setFeedback] = useState(FeedbackData);
   // added here in oreder to access feedback data ^^
   const deleteFeedback = (id) => {
-    console.log('App', id);
+    // add a confirmation window when button is clicked
+    if (window.confirm('Are you sure you want to delete this?')) {
+      // if item id is not equal to the id being passed in, returns array minus deleted
+      setFeedback(feedback.filter((item) => item.id !== id));
+    }
   };
   return (
     <>
       <Header />
       <div className="container">
-        {/* props are passed from FeedbackList */}
+        {/* props are passed from FeedbackList component */}
         <FeedbackList feedback={feedback} handleDelete={deleteFeedback} />
       </div>
     </>
