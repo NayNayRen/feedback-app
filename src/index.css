@@ -94,10 +94,10 @@ body {
   text-align: center;
 }
 
-.card.reverse {
+/* .card.reverse {
   background-color: rgba(0, 0, 0, 0.4);
   color: #fff;
-}
+} */
 
 .container {
   margin: auto;
