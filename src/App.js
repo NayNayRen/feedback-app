@@ -4,13 +4,18 @@ import FeedbackList from './components/FeedbackList';
 import FeedbackData from './data/FeedbackData';
 
 function App() {
-  // global/app level state, passed as a prop to FeedbackList
+  // feedback list as global/app level state, passed as a prop to FeedbackList
   const [feedback, setFeedback] = useState(FeedbackData);
+  // added here in oreder to access feedback data ^^
+  const deleteFeedback = (id) => {
+    console.log('App', id);
+  };
   return (
     <>
       <Header />
       <div className="container">
-        <FeedbackList feedback={feedback} />
+        {/* props are passed from FeedbackList */}
+        <FeedbackList feedback={feedback} handleDelete={deleteFeedback} />
       </div>
     </>
   );

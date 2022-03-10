@@ -1,7 +1,7 @@
 import FeedbackItem from './FeedbackItem';
 import PropTypes from 'prop-types';
 
-function FeedbackList({ feedback }) {
+function FeedbackList({ feedback, handleDelete }) {
   // conditional set in case there is no feedback item, else return the list
   if (!feedback || feedback.length === 0) {
     return <p>There is no feedback yet.</p>;
@@ -10,7 +10,13 @@ function FeedbackList({ feedback }) {
     <div className="feedback-list">
       {/* iterating through the feedback list */}
       {feedback.map((item) => (
-        <FeedbackItem key={item.id} item={item} />
+        <FeedbackItem
+          // props for FeedbackItem
+          key={item.id}
+          item={item}
+          // handleDelete is called from FeedbackItem.jsx
+          handleDelete={handleDelete}
+        />
       ))}
     </div>
   );
