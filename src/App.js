@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import Header from './components/Header';
 import FeedbackList from './components/FeedbackList';
 import FeedbackData from './data/FeedbackData';
@@ -9,6 +10,12 @@ function App() {
   // feedback list as global/app level state, passed as a prop to FeedbackList
   const [feedback, setFeedback] = useState(FeedbackData);
   // added here in oreder to access feedback data ^^
+  const addFeedback = (newFeedback) => {
+    // unique id created from imported package above
+    newFeedback.id = uuidv4();
+    // spread operator(...) to copy feedback array then add the new fedback
+    setFeedback([newFeedback, ...feedback]);
+  };
   const deleteFeedback = (id) => {
     // add a confirmation window when button is clicked
     if (window.confirm('Are you sure you want to delete this?')) {
@@ -20,7 +27,7 @@ function App() {
     <>
       <Header />
       <div className="container">
-        <FeedbackForm />
+        <FeedbackForm handleAdd={addFeedback} />
         <FeedbackStats feedback={feedback} />
         {/* props are passed from FeedbackList component */}
         <FeedbackList feedback={feedback} handleDelete={deleteFeedback} />
@@ -43,3 +50,6 @@ export default App;
 // first is the name of the variable, second is the function to update the state
 // any time you want to change the state, or data, with an event, you must call the state's function and pass it the new data
 // state in React is imutable, it can't be changed, it has to be reset
+// stops app and installed unique id package, 'npm i uuid' in terminal and home folder of app, imported at top
+// to use, call the 'uuidv4' as a function, it makes a random id number
+// need to call setFeedback any time you are changing, adding, or removing the state(data)
