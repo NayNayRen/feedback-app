@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Card from './shared/Card';
+import Button from './shared/Button';
 
 function FeedbackForm() {
   const [text, setText] = useState('');
@@ -18,7 +19,7 @@ function FeedbackForm() {
             placeholder="Write a review."
             value={text}
           />
-          <button type="submit">Send</button>
+          <Button type="submit">Send</Button>
         </div>
       </form>
     </Card>
@@ -32,3 +33,4 @@ export default FeedbackForm;
 // set the state(data) as a destructured variable const [text, setText] = useState('')
 // the method/function used to update the state(data) is setText
 // onChange event is added to the input and setText is passed e.target.value to pick up key strokes
+// button element is replaced with Button component
