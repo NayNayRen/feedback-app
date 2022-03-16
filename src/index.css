@@ -15,10 +15,13 @@
 .about-link {
   -ms-flex-pack: end;
   -webkit-box-pack: end;
+  bottom: 10px;
   display: -ms-flexbox;
   display: -webkit-box;
   display: flex;
   justify-content: flex-end;
+  position: absolute;
+  right: 10px;
 }
 
 /* FIX: Remove position: absolute to keep about icon at the bottom of the
