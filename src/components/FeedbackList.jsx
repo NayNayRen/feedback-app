@@ -1,7 +1,10 @@
 import FeedbackItem from './FeedbackItem';
-import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import FeedbackContext from '../context/FeedbackContext';
 
-function FeedbackList({ feedback, handleDelete }) {
+function FeedbackList({ handleDelete }) {
+  // feedback is passed into the empty object set as the context
+  const { feedback } = useContext(FeedbackContext);
   // conditional set in case there is no feedback item, else return the list
   if (!feedback || feedback.length === 0) {
     return <p>There is no feedback yet.</p>;
@@ -22,19 +25,11 @@ function FeedbackList({ feedback, handleDelete }) {
   );
 }
 
-FeedbackList.propTypes = {
-  feedback: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      text: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-    })
-  ),
-};
-
 export default FeedbackList;
 
-// feedback prop from App.js is passed destructured to the FeedbackList function
 // don't forget jsx in the map() needs to be wrapped in ()
 // imported FeedbackItem from FeedbackItem.jsx, used it in the map(), passed the items id as the key(since it needs to be a unique value) and the item/text itself
-// set PropType for feedback array as arrayOf and (), PropTypes.shape is used for the types of each object of the array wrapped in ({}) for extra checks, more robust, less breakage
+
+// import useContext from react along with the feedbackContext created
+// use it by bringing it in as an empty object{} and passing it the context imported(FeedbackContext)
+// feedback is passed into the empty object set as the context

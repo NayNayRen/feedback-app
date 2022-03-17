@@ -40,12 +40,9 @@ function App() {
               element={
                 <>
                   <FeedbackForm handleAdd={addFeedback} />
-                  <FeedbackStats feedback={feedback} />
+                  <FeedbackStats />
                   {/* props are passed from FeedbackList component */}
-                  <FeedbackList
-                    feedback={feedback}
-                    handleDelete={deleteFeedback}
-                  />
+                  <FeedbackList handleDelete={deleteFeedback} />
                 </>
               }
             ></Route>

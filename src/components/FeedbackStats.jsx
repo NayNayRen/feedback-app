@@ -1,6 +1,9 @@
-import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import FeedbackContext from '../context/FeedbackContext';
 
-function FeedbackStats({ feedback }) {
+function FeedbackStats() {
+  // feedback is passed into the empty object set as the context
+  const { feedback } = useContext(FeedbackContext);
   // calculating the ratings average, accumulator(default set to 0) and current value
   let average =
     feedback.reduce((accumulator, currentValue) => {
@@ -17,11 +20,8 @@ function FeedbackStats({ feedback }) {
   );
 }
 
-FeedbackStats.propTypes = {
-  feedback: PropTypes.array.isRequired,
-};
-
 export default FeedbackStats;
 
-// feedback array is passed as a deconstructed prop
-// set the feedback prop type to an array for extra checking, makes sure it's an array
+// import useContext from react along with the feedbackContext created
+// use it by bringing it in as an empty object{} and passing it the context imported(FeedbackContext)
+// feedback is passed into the empty object set as the context
