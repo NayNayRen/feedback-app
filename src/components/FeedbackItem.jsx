@@ -1,13 +1,17 @@
 import { FaTimes } from 'react-icons/fa';
 import Card from './shared/Card';
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import FeedbackContext from '../context/FeedbackContext';
 
-function FeedbackItem({ item, handleDelete }) {
+function FeedbackItem({ item }) {
+  // deleteFeedback is passed into the empty object set as the context to use the function
+  const { deleteFeedback } = useContext(FeedbackContext);
   return (
     <Card>
       <div className="num-display">{item.rating}</div>
       {/* you can set onClick events inline using arrow functions or named function */}
-      <button onClick={() => handleDelete(item.id)} className="close">
+      <button onClick={() => deleteFeedback(item.id)} className="close">
         <FaTimes color="#000" />
       </button>
       <div className="text-display">{item.text}</div>

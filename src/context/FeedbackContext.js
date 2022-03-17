@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 const FeedbackContext = createContext();
 
@@ -12,10 +13,27 @@ export const FeedbackProvider = ({ children }) => {
     },
   ]);
 
+  const addFeedback = (newFeedback) => {
+    // unique id created from imported package above
+    newFeedback.id = uuidv4();
+    // spread operator(...) to copy feedback array then add the new fedback
+    setFeedback([newFeedback, ...feedback]);
+  };
+
+  const deleteFeedback = (id) => {
+    // add a confirmation window when button is clicked
+    if (window.confirm('Are you sure you want to delete this?')) {
+      // if item id is not equal to the id being passed in, returns array minus deleted
+      setFeedback(feedback.filter((item) => item.id !== id));
+    }
+  };
+
   return (
     <FeedbackContext.Provider
       value={{
         feedback,
+        addFeedback,
+        deleteFeedback,
       }}
     >
       {children}

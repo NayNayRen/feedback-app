@@ -2,7 +2,7 @@ import FeedbackItem from './FeedbackItem';
 import { useContext } from 'react';
 import FeedbackContext from '../context/FeedbackContext';
 
-function FeedbackList({ handleDelete }) {
+function FeedbackList() {
   // feedback is passed into the empty object set as the context
   const { feedback } = useContext(FeedbackContext);
   // conditional set in case there is no feedback item, else return the list
@@ -17,8 +17,6 @@ function FeedbackList({ handleDelete }) {
           // props for FeedbackItem
           key={item.id}
           item={item}
-          // handleDelete is called from FeedbackItem.jsx
-          handleDelete={handleDelete}
         />
       ))}
     </div>
@@ -33,3 +31,4 @@ export default FeedbackList;
 // import useContext from react along with the feedbackContext created
 // use it by bringing it in as an empty object{} and passing it the context imported(FeedbackContext)
 // feedback is passed into the empty object set as the context
+// handleDelete is moved to FeedbackContext.js
