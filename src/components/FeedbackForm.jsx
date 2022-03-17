@@ -11,7 +11,7 @@ function FeedbackForm() {
   const [message, setMessage] = useState('');
   const [rating, setRating] = useState(10);
 
-  // addFeedback is passed into the empty object set as the context
+  // addFeedback function is passed into the empty object set as the context
   const { addFeedback } = useContext(FeedbackContext);
 
   const handleTextChange = (e) => {

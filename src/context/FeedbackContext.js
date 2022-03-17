@@ -8,8 +8,18 @@ export const FeedbackProvider = ({ children }) => {
   const [feedback, setFeedback] = useState([
     {
       id: 1,
-      text: 'item is from context',
-      rating: 2,
+      rating: 10,
+      text: 'this is the text from the first feedback entry.',
+    },
+    {
+      id: 2,
+      rating: 7,
+      text: 'this would be the second entry of the feedback entries.',
+    },
+    {
+      id: 3,
+      rating: 4,
+      text: ' and this is the third of the feedback entries.',
     },
   ]);
 
@@ -31,8 +41,11 @@ export const FeedbackProvider = ({ children }) => {
   return (
     <FeedbackContext.Provider
       value={{
+        // data
         feedback,
+        // function
         addFeedback,
+        // function
         deleteFeedback,
       }}
     >
@@ -53,3 +66,6 @@ export default FeedbackContext;
 // pass the name of the state to the value prop
 // import Provider into App.js in order to wrap all components with
 // wrap from under the return above the <Router> and below the </Router>
+// state(data) was pulled from App.js and moved here
+// useContext and FeedbackContext were imported to FeedbackItem, List, and Form
+// object variables were set with info needed for FeedbackItem, List, and Form files using useContext(FeedbackContext);
