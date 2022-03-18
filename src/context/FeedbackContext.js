@@ -43,9 +43,9 @@ export const FeedbackProvider = ({ children }) => {
       value={{
         // data
         feedback,
-        // function
+        // add function
         addFeedback,
-        // function
+        // add function
         deleteFeedback,
       }}
     >
