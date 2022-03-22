@@ -1,18 +1,21 @@
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaEdit } from 'react-icons/fa';
 import Card from './shared/Card';
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import FeedbackContext from '../context/FeedbackContext';
 
 function FeedbackItem({ item }) {
-  // deleteFeedback is passed into the empty object set as the context to use the function
-  const { deleteFeedback } = useContext(FeedbackContext);
+  // deleteFeedback is passed into the empty object set as the context to use the function, along with editFeedback
+  const { deleteFeedback, editFeedback } = useContext(FeedbackContext);
   return (
     <Card>
       <div className="num-display">{item.rating}</div>
       {/* you can set onClick events inline using arrow functions or named function */}
       <button onClick={() => deleteFeedback(item.id)} className="close">
         <FaTimes color="#000" />
+      </button>
+      <button onClick={() => editFeedback(item)} className="edit">
+        <FaEdit color="#000" />
       </button>
       <div className="text-display">{item.text}</div>
     </Card>

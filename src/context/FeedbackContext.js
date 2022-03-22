@@ -22,6 +22,13 @@ export const FeedbackProvider = ({ children }) => {
       text: ' and this is the third of the feedback entries.',
     },
   ]);
+  // new state to edit feedback item
+  const [feedbackEdit, setFeedbackEdit] = useState({
+    // item will be the flag for the item selected
+    item: {},
+    // default editability set to false, so you can't edit unless clicked
+    edit: false,
+  });
 
   const addFeedback = (newFeedback) => {
     // unique id created from imported package above
@@ -38,6 +45,15 @@ export const FeedbackProvider = ({ children }) => {
     }
   };
 
+  const editFeedback = (item) => {
+    // passes the item and calls set feedback
+    setFeedbackEdit({
+      item,
+      // changes item to be editable
+      edit: true,
+    });
+  };
+
   return (
     <FeedbackContext.Provider
       value={{
@@ -47,6 +63,8 @@ export const FeedbackProvider = ({ children }) => {
         addFeedback,
         // add function
         deleteFeedback,
+        // edits feedback
+        editFeedback,
       }}
     >
       {children}
