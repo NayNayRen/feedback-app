@@ -1,12 +1,18 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import FeedbackContext from '../context/FeedbackContext';
 
 function RatingsSelect({ select }) {
+  const { feedbackEdit } = useContext(FeedbackContext);
   const [selected, setSelected] = useState(10);
   const handleChange = (e) => {
     // adding a + sign changes the output from a string to a number
     setSelected(+e.currentTarget.value);
     select(+e.currentTarget.value);
   };
+  // feedbackEdit(object with item and boolean) states(data) are passed into the empty object set as the context from FeedbackContext.js
+  useEffect(() => {
+    setSelected(feedbackEdit.item.rating);
+  }, [feedbackEdit]);
   return (
     <ul className="rating">
       <li>
@@ -126,3 +132,4 @@ function RatingsSelect({ select }) {
 export default RatingsSelect;
 
 // state binds the value of the radio button clicked by passing the prop(attribute) 'select' from the RatingsSelect component element from FeedbackForm.jsx
+// useContext was added to react import to apply the rating changes when editing feedback

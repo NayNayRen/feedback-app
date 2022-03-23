@@ -7,6 +7,7 @@ import FeedbackContext from '../context/FeedbackContext';
 function FeedbackItem({ item }) {
   // deleteFeedback is passed into the empty object set as the context to use the function, along with editFeedback
   const { deleteFeedback, editFeedback } = useContext(FeedbackContext);
+
   return (
     <Card>
       <div className="num-display">{item.rating}</div>
@@ -38,3 +39,5 @@ export default FeedbackItem;
 // add font-awesome icons by stopping the server, typing 'npm i react-icons', start the server
 // import icons from 'react-icons/fa', the name inside the {} after the import is the icon you're using
 // FaTimes is the icon, added as a component <FaTimes />, styled inline with color='purple'
+// add multiple icons to the same import and apply them the same as above
+// onClick actions are brought in from FeedbackContext.js

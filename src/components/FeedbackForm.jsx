@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Card from './shared/Card';
 import Button from './shared/Button';
 import RatingsSelect from './RatingsSelect';
-import { useContext } from 'react';
 import FeedbackContext from '../context/FeedbackContext';
 
 function FeedbackForm() {
@@ -11,8 +10,9 @@ function FeedbackForm() {
   const [message, setMessage] = useState('');
   const [rating, setRating] = useState(10);
 
-  // addFeedback function is passed into the empty object set as the context
-  const { addFeedback } = useContext(FeedbackContext);
+  // addFeedback(new item) and feedbackEdit(object with item and boolean) states(data) are passed into the empty object set as the context from FeedbackContext.js
+  const { addFeedback, feedbackEdit, updateFeedback } =
+    useContext(FeedbackContext);
 
   const handleTextChange = (e) => {
     // if the text is empty, button is disabled, message is null
@@ -40,10 +40,27 @@ function FeedbackForm() {
         text,
         rating,
       };
-      addFeedback(newFeedback);
+      if (feedbackEdit.edit === true) {
+        updateFeedback(feedbackEdit.item.id, newFeedback);
+      } else {
+        addFeedback(newFeedback);
+      }
       setText('');
     }
   };
+  // useEffect is applied as a function with a call back and an array as a second parameter to useEffect, if array is left empty, action happens on page load
+  useEffect(() => {
+    // console.log('hello');
+    // check to see if the edit boolean is true(clicked) then allow the edit
+    // applies selection to the input field
+    if (feedbackEdit.edit === true) {
+      setBtnDisabled(false);
+      setText(feedbackEdit.item.text);
+      setRating(feedbackEdit.item.rating);
+    } else {
+    }
+  }, [feedbackEdit]);
+
   return (
     <Card>
       <form onSubmit={handleSubmit}>
@@ -81,3 +98,9 @@ export default FeedbackForm;
 // new state added, message, the message for the text limit, empty string('') by default
 // the message is set as a conditional so there is always one, if there's a message(message) then(&&) <div>{message}</div>
 // validation is added to the handleTextChange event
+// feedbackEdit is considered a side effect, which needs to be handled with a hook called 'useEffect' imported from react
+// useEffect is applied as a function with a call back and an array as a second parameter to useEffect, if array is left empty, action happens on page load
+// the console.log is where you would make http component fetch requests from
+// you would leave the array empty so that that fetch request only runs once
+// in this case we want it to run every time the edit button is clicked, so we pass the feedbackEdit event to the array
+// then set a conditional to check for the edit button being clicked

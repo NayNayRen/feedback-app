@@ -9,6 +9,7 @@ function FeedbackList() {
   if (!feedback || feedback.length === 0) {
     return <p>There is no feedback yet.</p>;
   }
+
   return (
     <div className="feedback-list">
       {/* iterating through the feedback list */}
