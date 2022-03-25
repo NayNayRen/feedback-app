@@ -1,27 +1,13 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 const FeedbackContext = createContext();
 
 export const FeedbackProvider = ({ children }) => {
-  // set and use state the same as in App.js
-  const [feedback, setFeedback] = useState([
-    {
-      id: 1,
-      rating: 10,
-      text: 'this is the text from the first feedback entry.',
-    },
-    {
-      id: 2,
-      rating: 7,
-      text: 'this would be the second entry of the feedback entries.',
-    },
-    {
-      id: 3,
-      rating: 4,
-      text: ' and this is the third of the feedback entries.',
-    },
-  ]);
+  // loading icon, true is passed to show it until fetch is done
+  const [isLoading, setIsLoading] = useState(true);
+  // default state is an empty array, data is passed via mock backend
+  const [feedback, setFeedback] = useState([]);
   // new state to edit feedback item
   const [feedbackEdit, setFeedbackEdit] = useState({
     // item will be the flag for the item selected
@@ -29,6 +15,20 @@ export const FeedbackProvider = ({ children }) => {
     // default editability set to false, so you can't edit unless clicked
     edit: false,
   });
+  // useEffect is called to load once with the page, calling the fetch
+  useEffect(() => {
+    fetchFeedback();
+  }, []);
+  // fetch data, async/await forces other code to wait until response returns data
+  const fetchFeedback = async () => {
+    // response is the end point with our db.json file
+    const response = await fetch(
+      'http://localhost:5000/feedback?_sort=id&_order=desc'
+    );
+    const data = await response.json();
+    setFeedback(data);
+    setIsLoading(false);
+  };
   // add
   const addFeedback = (newFeedback) => {
     // unique id created from imported package above
@@ -70,6 +70,8 @@ export const FeedbackProvider = ({ children }) => {
         feedback,
         // piece of state to edit the feedback entry
         feedbackEdit,
+        // loading icon
+        isLoading,
         // add function
         addFeedback,
         // add function
@@ -101,3 +103,9 @@ export default FeedbackContext;
 // useContext and FeedbackContext were imported to FeedbackItem, List, and Form
 // object variables were set with info needed for FeedbackItem, List, and Form files using useContext(FeedbackContext)
 // updateFeedback is set with a ternary conditional, it reads 'if the id equals the id being passed, then spread(...) across the current item and upadatedItem, else(:) return the current item
+// removed hard coded array to use data from the backend db.json file
+// useEffect is imported so the app loads with the page, second argument is an empty array []
+// query parameters start with a ? in the fetch
+// if your fetching data from a backend you should have some sort of state(data) loading icon
+// new piece of state(data) called isLoading will be used for a loading icon
+// set the deault state to true, until the fetch is made
