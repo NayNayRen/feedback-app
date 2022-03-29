@@ -14,6 +14,11 @@
       "id": 3,
       "rating": 8,
       "text": "and this is the third this item now coming from the JSON file."
+    },
+    {
+      "text": "this is an updated item",
+      "rating": 5,
+      "id": 4
     }
   ]
 }

@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 const FeedbackContext = createContext();
 
@@ -22,24 +21,30 @@ export const FeedbackProvider = ({ children }) => {
   // fetch data, async/await forces other code to wait until response returns data
   const fetchFeedback = async () => {
     // response is the end point with our db.json file
-    const response = await fetch(
-      'http://localhost:5000/feedback?_sort=id&_order=desc'
-    );
+    const response = await fetch('/feedback?_sort=id&_order=desc');
     const data = await response.json();
     setFeedback(data);
     setIsLoading(false);
   };
   // add
-  const addFeedback = (newFeedback) => {
-    // unique id created from imported package above
-    newFeedback.id = uuidv4();
+  const addFeedback = async (newFeedback) => {
+    // posting/saving the new feedback item
+    const response = await fetch('/feedback', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newFeedback),
+    });
+    const data = await response.json();
     // spread operator(...) to copy feedback array then add the new fedback
-    setFeedback([newFeedback, ...feedback]);
+    setFeedback([data, ...feedback]);
   };
   // delete
-  const deleteFeedback = (id) => {
+  const deleteFeedback = async (id) => {
     // add a confirmation window when button is clicked
     if (window.confirm('Are you sure you want to delete this?')) {
+      await fetch(`/feedback/${id}`, { method: 'DELETE' });
       // if item id is not equal to the id being passed in, returns array minus deleted
       setFeedback(feedback.filter((item) => item.id !== id));
     }
@@ -54,12 +59,18 @@ export const FeedbackProvider = ({ children }) => {
     });
   };
   // update
-  const updateFeedback = (id, updatedItem) => {
+  const updateFeedback = async (id, updatedItem) => {
+    const response = await fetch(`/feedback/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedItem),
+    });
+    const data = await response.json();
     // setFeedback maps a conditional to check id, adds and updates
     setFeedback(
-      feedback.map((item) =>
-        item.id === id ? { ...item, ...updatedItem } : item
-      )
+      feedback.map((item) => (item.id === id ? { ...item, ...data } : item))
     );
   };
 
