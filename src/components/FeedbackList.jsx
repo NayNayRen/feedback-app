@@ -1,16 +1,19 @@
 import FeedbackItem from './FeedbackItem';
 import { useContext } from 'react';
 import FeedbackContext from '../context/FeedbackContext';
+import Spinner from './shared/Spinner';
 
 function FeedbackList() {
   // feedback is passed into the empty object set as the context
-  const { feedback } = useContext(FeedbackContext);
+  const { feedback, isLoading } = useContext(FeedbackContext);
   // conditional set in case there is no feedback item, else return the list
-  if (!feedback || feedback.length === 0) {
+  if (!isLoading && (!feedback || feedback.length === 0)) {
     return <p>There is no feedback yet.</p>;
   }
 
-  return (
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <div className="feedback-list">
       {/* iterating through the feedback list */}
       {feedback.map((item) => (
@@ -22,6 +25,19 @@ function FeedbackList() {
       ))}
     </div>
   );
+
+  // return (
+  //   <div className="feedback-list">
+  //     {/* iterating through the feedback list */}
+  //     {feedback.map((item) => (
+  //       <FeedbackItem
+  //         // props for FeedbackItem
+  //         key={item.id}
+  //         item={item}
+  //       />
+  //     ))}
+  //   </div>
+  // );
 }
 
 export default FeedbackList;
